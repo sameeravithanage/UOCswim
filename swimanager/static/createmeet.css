@@ -1,0 +1,22 @@
+div#load-wrapper{
+    opacity: 0.3;
+    background-color: #30336b;
+    position: absolute;
+    height: 110%;
+    z-index: 1000;
+    width: 100%;
+    cursor: wait;
+    display: none;
+    background-image: url(images/loader.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.submit-btn{
+    margin-top: 0.7em;
+}
+/* div#loading {
+    
+    height: 90vh;
+
+    } */

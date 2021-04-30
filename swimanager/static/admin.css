@@ -1,0 +1,23 @@
+.image_container{
+    height: 15em;
+    width: 20em;
+    overflow: hidden;   
+}
+
+img{
+    width: 100%;
+    min-height: 100%;
+}
+
+.meets{
+    margin-top: 2em;
+    box-shadow: 2px 2px 5px 2px #888888;
+}
+
+.gap-top{
+    padding-top: 1em;
+}
+
+.gap-bot{
+    padding-bottom: 1em;
+}

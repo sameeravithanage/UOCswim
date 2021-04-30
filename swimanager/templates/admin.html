@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block design %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}" >
+{% endblock design %}
+{% block content %}
+<div class="container mt-5">
+    <div>
+        <a href="{{ url_for('createmeet') }}">
+            <button type="button" class="btn btn-outline-primary btn-lg">
+                Create Meet 
+            </button>
+        </a>
+    </div> 
+    <div class="row">
+        {% for meetid,meet in meets.items() %}
+            <div class="col-lg-4">
+                <div class="container meets">
+                    <div class="image_container gap-top gap-bot">
+                            <img src="{{url_for('static', filename=meet['image'])}}" />
+                    </div>
+                    <div class="gap-bot">
+                        <h3>{{ meet.meetid }}</h3>
+                        <h3>{{ meet.meettitle }}</h3>
+                        <h5> {{ meet.startdate }}</h5>
+                        <h5>{{ meet.location }}</h5>
+                        <button type="button" onclick="window.location.href='{{ url_for('meet', meet=meetid) }}';" class="btn btn-lg btn-outline-info btn-block">View</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>   
+</div>
+{% endblock content %}

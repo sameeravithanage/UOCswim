@@ -1,0 +1,1 @@
+# UOC-swimming-meet-manager

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block design %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}" >
+    <link href="https://fonts.googleapis.com/css?family=Finger+Paint&display=swap" rel="stylesheet">
+{% endblock design %}
+
+{% block content %}
+<div class=" container">
+  <div class="row">
+    {% for meetid,meet in meets.items() %}
+        {% if meet.meet %}
+          <div class="col-md-4 col-6">
+            <a href="{{ url_for('view_meet', meet=meet['meetid'])}}">        
+              <div class="card bg-dark text-white text-center meet-card">
+                <img src="{{ url_for('static', filename=meet['image']) }}" class="card-img">
+                <div class="card-img-overlay name_center">
+                  <h4 class="card-title">{{ meet.shortname }}</h4>
+                </div>
+              </div>
+            </a>
+
+
+            <!-- <button type="button" onclick="window.location.href='{{ url_for('view_meet', meet=meet['meetid']) }}';" class="btn btn-lg btn-outline-light btn-block">{{ meet.meettitle }}</button> -->
+
+          </div>  
+        {% endif %}
+    {% endfor %}   
+  </div>
+</div>
+{% endblock content %}
+               

@@ -1,0 +1,219 @@
+{% extends "layout.html" %}
+{% block design %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='meet.css') }}" >
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+{% endblock design %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h3>{{ meet.meettitle }}</h3>
+    <h5><i class="far fa-calendar-alt"></i> : {{ meet.startdate }}</h5>
+    <h5><i class="fas fa-map-marker-alt"></i> : {{ meet.location }}</h5>
+</div>
+
+
+<div class=" container mt-5">
+
+
+      <!-- Results section -->
+      <button type="button" class="btn btn-outline-dark btn-lg btn-block result-btn" id="collapseResultsbtn">
+          View Results
+      </button>
+
+      <div class="collapse" id="collapseResults">
+        <div>
+          <h4 class="text-center" id="resultHeader">Results - Men</h4>
+          <div class="row">
+            {% for evt in meet.pub_settings.results.boys %}
+              <div class="col-sm-6">
+                <div class="card result_card border-0">
+                    <h5 class="card-header"> {{ evt }} </h5>                    
+                  <div class="card-body">
+                    {% if evt in results.men %}
+                      <table class="table table-bordered result-tbl">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Name</th>
+                            <th>Reg No</th>
+                            <th>Team</th>
+                            <th>Time</th>
+                            <th>Place</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for foo in results.men[evt] %}
+                            <tr>
+                              <td>
+                                {{ foo[0] }}
+                              </td>
+                              <td>
+                                {{ foo[1] }}
+                              </td>
+                              <td>
+                                {{ foo[2] }}
+                              </td>
+                              <td>
+                                {{ foo[3] }}
+                              </td>
+                              <td>
+                                {{ foo[4] }}
+                              </td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    {% else %}
+                      <p class="card-text">Results are not published yet</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- women -->
+        <div>
+          <h4 class="text-center" id="resultHeader">Results - Women</h4>
+          <div class="row">
+            {% for evt in meet.pub_settings.results.girls %}
+              <div class="col-sm-6">
+                <div class="card result_card border-0">                  
+                    <h5 class="card-header"> {{ evt }} </h5>                    
+                  <div class="card-body">
+                    {% if evt in results.women %}
+                      <table class="table table-bordered result-tbl">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Name</th>
+                            <th>Reg No</th>
+                            <th>Team</th>
+                            <th>Time</th>
+                            <th>Place</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for foo in results.women[evt] %}
+                            <tr>
+                              <td>
+                                {{ foo[0] }}
+                              </td>
+                              <td>
+                                {{ foo[1] }}
+                              </td>
+                              <td>
+                                {{ foo[2] }}
+                              </td>
+                              <td>
+                                {{ foo[3] }}
+                              </td>
+                              <td>
+                                {{ foo[4] }}
+                              </td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    {% else %}
+                      <p class="card-text">Results are not published yet</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+
+
+    {% if meet.pub_settings.events %}
+        <button type="button" class="btn btn-outline-dark btn-lg btn-block result-btn" id="collapseEntriesbtn">
+            View Entries
+        </button>
+
+
+        <div class="collapse" id="collapseEntries">
+            <h4 class="text-center gender" id="resultHeader">Entries - Men</h4>
+            <div class="row">
+              {% for k,v in entries[0].items() %}
+                <div class="col-sm-6">
+                    <div class="card result_card border-0">
+                      <h5 class="card-header">{{ k }}</h5>
+                      <div class="card-body">
+                        <table class="table table-bordered">
+                          <thead class="thead-light">
+                            <tr>
+                              <th scope="col">Name</th>
+                              <th scope="col">Reg No</th>
+                              <th scope="col">Team</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for i in v %}
+                              <tr>
+                                <td>
+                                  {{ i[0] }}
+                                </td>
+                                <td>
+                                  {{ i[1] }}
+                                </td>
+                                <td>
+                                  {{ i[2] }}
+                                </td>
+                              </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                </div>
+              {% endfor %}
+            </div>
+          
+          
+            <h4 class="text-center gender" id="resultHeader">Entries - Women</h4>
+            <div class="row">
+              {% for k,v in entries[1].items() %}
+                <div class="col-sm-6">
+                    <div class="card result_card border-0">
+                      <h5 class="card-header">{{ k }}</h5>
+                      <div class="card-body">
+                          <table class="table table-bordered">
+                            <thead class="thead-light">
+                              <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Reg No</th>
+                                <th scope="col">Team</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for i in v %}
+                                <tr>
+                                  <td>
+                                    {{ i[0] }}
+                                  </td>
+                                  <td>
+                                    {{ i[1] }}
+                                  </td>
+                                  <td>
+                                    {{ i[2] }}
+                                  </td>
+                                </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                      </div>
+                    </div>
+                </div>
+              {% endfor %}
+            </div>
+
+        </div>  
+    {% endif %}     
+<a id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="fas fa-chevron-up"></i></a>
+</div>
+<script src="{{ url_for('static', filename='js/view_meet.js') }}"></script>
+{% endblock content %}
+               

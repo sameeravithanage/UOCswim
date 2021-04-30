@@ -1,0 +1,290 @@
+{% extends "layout.html" %}
+{% block design %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='meet.css') }}" >
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+{% endblock design %}
+{% block content %}
+
+<!-- loader -->
+<div id="load-wrapper"></div>
+
+<!-- meet settings -->
+<div class="container mt-5">
+    <h3>Meet ID: {{ meet.meetid }}</h3>
+    <h3>{{ meet.meettitle }}</h3>
+    <h5>Competition dates: {{ meet.startdate }} to {{ meet.enddate }}</h5>
+    <h5>Venue: {{ meet.location }}</h5>
+    <h5><a href="https://docs.google.com/spreadsheets/d/{{ meet.entryid }}" target="_blank"> Entry Sheet </a></h5>
+    {% if meet.eventid|length > 1 %}
+      <h5><a href="https://docs.google.com/spreadsheets/d/{{ meet.eventid }}" target="_blank"> Event Sheet </a></h5>
+    {% endif %}
+    <button class="btn btn-outline-secondary" id="padlock"><i class="fas fa-cogs"></i></button>
+</div>
+
+<div id="settingsdiv" class="settings container">
+
+  <a href="{{ url_for('meet_pub', meet=meet['meetid']) }}">
+    <button class="btn btn-outline-secondary"  onclick="preloader()" data-toggle="tooltip" data-placement="top" title="Publish Meet">
+      <i class="fas fa-share-alt" {% if meet.pub_settings.meet %} style="color:greenyellow" {% endif %}></i>
+    </button>
+  </a>
+
+  <a id="del_meet" href="{{ url_for('del_meet', meet=meet['meetid']) }}">
+    <button id="delete_meet" class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Delete Meet">
+      <i class="far fa-trash-alt"></i>
+    </button>
+  </a>
+
+  <a href="{{ url_for('entries', meet=meet['meetid']) }}">
+    <button class="btn btn-outline-secondary"  onclick="preloader()" data-toggle="tooltip" data-placement="top" title="Sync Entries">
+      <i class="fab fa-google-drive"></i>
+    </button>
+  </a>
+
+  {% if file_status == True %}
+    <a href="{{ url_for('events', meet=meet['meetid']) }}">
+      <button class="btn btn-outline-secondary" onclick="preloader()" data-toggle="tooltip" data-placement="top" title="Create Event Sheet">
+        <i class="fas fa-list-ul"></i>
+      </button>
+    </a>
+    <a href="{{ url_for('publish_events', meet=meet['meetid']) }}">
+      <button class="btn btn-outline-secondary" onclick="preloader()" data-toggle="tooltip" data-placement="top" title="Publish Entries">
+        <i class="fas fa-external-link-alt" {% if meet.pub_settings.events %} style="color:greenyellow" {% endif %}></i>        
+      </button>
+    </a>
+  {% endif %}
+</div>
+
+<!-- meet content -->
+
+<div class="container">
+  {% if file_status == True %}
+    <button type="button" class="btn btn-outline-dark btn-lg btn-block" id="collapseEntriesbtn">
+      View Entries
+    </button>
+    <!-- Events details -->
+    <div class="collapse" id="collapseEntries">
+
+
+      <p class="text-center h3 gender">Entries - Men</p>
+      <div class="row">
+        {% for k,v in men_ents.items() %}
+          <div class="col-sm-6">
+              <div class="card result_card border-0">
+                <h5 class="card-header">{{ k }}</h5>
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Name</th>
+                        <th>Reg No</th>
+                        <th>Team</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in v %}
+                        <tr>
+                          <td>
+                            {{ i[0] }}
+                          </td>
+                          <td>
+                            {{ i[1] }}
+                          </td>
+                          <td>
+                            {{ i[2] }}
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </div>
+        {% endfor %}
+      </div>
+
+
+      <p class="text-center h3 gender">Entries - Women</p>
+      <div class="row">
+        {% for k,v in wmen_ents.items() %}
+          <div class="col-sm-6">
+              <div class="card result_card border-0">
+                <h5 class="card-header">{{ k }}</h5>
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Name</th>
+                        <th>Reg No</th>
+                        <th>Team</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in v %}
+                        <tr>
+                          <td>
+                            {{ i[0] }}
+                          </td>
+                          <td>
+                            {{ i[1] }}
+                          </td>
+                          <td>
+                            {{ i[2] }}
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+  
+  {% if meet.eventstat == True %}
+    <!-- Results section -->
+    <button type="button" class="btn btn-outline-dark btn-lg btn-block result-btn" id="collapseResultsbtn">
+        View Results
+    </button>
+
+    <div class="collapse" id="collapseResults">
+      <div>
+        <h5 id="resultHeader">Results - Men</h5>
+        <div class="row">
+          {% for evt in ev_list.boys %}
+            <div class="col-sm-6">
+              <div class="card result_card border-0">
+                <div class="card-header">
+                  {{ evt }} <p style="display:inline" id="header_{{ evt }}-men"></p>
+                  
+                  <button class="btn btn-outline-secondary evt float-right" data-event="{{ evt }}" data-id="{{ meet.meetid }}" data-gender="-men" data-toggle="tooltip" data-placement="top" title="Sync Result">
+                    <i class="fas fa-file-download"></i>
+                  </button>
+                  
+                  <button class="btn btn-outline-secondary evtpub float-right" id="res_btn_{{ evt }}-men" {% if evt not in results.men %} style="display: none" {% endif %} data-event="{{ evt }}" data-id="{{ meet.meetid }}" data-gender="-men" data-toggle="tooltip" data-placement="top" title="Publish Result">
+                    <i class="fas fa-external-link-alt" id="icon_{{ evt }}-men" {% if evt in meet.pub_settings.results.boys %} style="color:greenyellow" {% endif %}></i>        
+                  </button> 
+
+                </div>
+                <div class="card-body" id="result_{{ evt }}-men">
+                  {% if evt in results.men %}
+                    <table class="table table-bordered">
+                      <thead class="thead-light">
+                        <tr>
+                          <th>Name</th>
+                          <th>Reg No</th>
+                          <th>Team</th>
+                          <th>Time</th>
+                          <th>Place</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for foo in results.men[evt] %}
+                          <tr>
+                            <td>
+                              {{ foo[0] }}
+                            </td>
+                            <td>
+                              {{ foo[1] }}
+                            </td>
+                            <td>
+                              {{ foo[2] }}
+                            </td>
+                            <td>
+                              {{ foo[3] }}
+                            </td>
+                            <td>
+                              {{ foo[4] }}
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  {% else %}
+                    <p class="card-text">Please sync with drive to view results</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- women -->
+      <div>
+        <h5 id="resultHeader">Results - Women</h5>
+        <div class="row">
+          {% for evt in ev_list.girls %}
+            <div class="col-sm-6">
+              <div class="card result_card border-0">
+                <div class="card-header">
+                  {{ evt }} <p style="display:inline" id="header_{{ evt }}-women"></p>
+                  
+                  <button class="btn btn-outline-secondary evt float-right" data-event="{{ evt }}" data-id="{{ meet.meetid }}" data-gender="-women" data-toggle="tooltip" data-placement="top" title="Sync Result">
+                    <i class="fas fa-file-download"></i>
+                  </button>
+                  
+                  <button class="btn btn-outline-secondary evtpub float-right"  id="res_btn_{{ evt }}-women" {% if evt not in results.women %} style="display: none" {% endif %}  data-event="{{ evt }}" data-id="{{ meet.meetid }}" data-gender="-women" data-toggle="tooltip" data-placement="top" title="Publish Result">
+                    <i class="fas fa-external-link-alt" id="icon_{{ evt }}-women" {% if evt in meet.pub_settings.results.girls %} style="color:greenyellow" {% endif %}></i>        
+                  </button> 
+                  
+                </div>
+                <div class="card-body" id="result_{{ evt }}-women">
+                  {% if evt in results.women %}
+                    <table class="table table-bordered">
+                      <thead class="thead-light">
+                        <tr>
+                          <th>Name</th>
+                          <th>Reg No</th>
+                          <th>Team</th>
+                          <th>Time</th>
+                          <th>Place</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for foo in results.women[evt] %}
+                          <tr>
+                            <td>
+                              {{ foo[0] }}
+                            </td>
+                            <td>
+                              {{ foo[1] }}
+                            </td>
+                            <td>
+                              {{ foo[2] }}
+                            </td>
+                            <td>
+                              {{ foo[3] }}
+                            </td>
+                            <td>
+                              {{ foo[4] }}
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  {% else %}
+                    <p class="card-text">Please sync with drive to view results</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  {% endif %}
+<a id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="fas fa-chevron-up"></i></a>
+</div>
+<script type="text/javascript">
+  function preloader(){
+      document.getElementById("load-wrapper").style.display = "block";
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="{{ url_for('static', filename='js/arraytotable.js') }}"></script>
+<script src="{{ url_for('static', filename='js/process.js') }}"></script>
+{% endblock content %}

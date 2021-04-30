@@ -1,0 +1,26 @@
+.navigation{
+ background: rgba(52, 73, 94,1.0);
+}
+.title{
+    font-weight: 700;
+    font-style: italic;
+    font-size: 2.5vw;
+}
+.nav-link{
+    font-size: 1.2vw;
+}
+.titlecol{
+    color: rgb(171, 204, 247) !important;   
+}
+html,body{
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 300;
+}
+
+.logoutpadding {
+    padding-right: 1.2em !important;
+}
+
+.navbar-nav{
+    flex-direction: row;
+}

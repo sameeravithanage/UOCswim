@@ -1,0 +1,95 @@
+.settings{
+    padding-bottom: 1em;
+}
+#resultHeader{
+    padding-top: 1em;
+    padding-bottom: 0.7em;
+}
+
+#padlock{
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.fa-stack { font-size: 0.8em; }
+.refresh{
+    color: rgb(14, 160, 62);
+    font-size: 1em;
+}
+div#load-wrapper{
+    opacity: 0.3;
+    background-color: #30336b;
+    position: absolute;
+    height: 110%;
+    z-index: 1000;
+    width: 100%;
+    cursor: wait;
+    display: none;
+    background-image: url(images/loader.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.gender{
+    padding-top: 1em
+}
+
+.event-header{
+    margin-top: 1.5em
+}
+
+.result-btn{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.result_card{
+    margin-bottom: 2em;
+}
+.evtpub{
+    margin-right: 1em;
+}
+
+#delete_meet{
+    color: red;
+}
+
+#del_meet{
+    padding-right: 2em;
+}
+
+#back-to-top {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: none;
+    background-color: rgba(52, 73, 94,1.0);
+    color: white;
+}
+
+@media only screen and (max-width: 600px) {
+    body{
+        font-size: 2.5vw;
+    }
+    .title{
+        font-weight: 700;
+        font-style: italic;
+        font-size: 5vw;
+    }
+    h5{
+        font-size: 4vw;
+    }
+    .result-btn{
+        font-size: 4vw;
+    }
+    h3{
+        font-size: 5vw;
+    }
+    h4{
+        font-size: 4.5vw;
+    }
+    #resultHeader{
+        padding-top: 0.7em;
+        padding-bottom: 0.5em;
+    }
+  }

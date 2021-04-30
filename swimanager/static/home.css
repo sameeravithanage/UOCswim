@@ -1,0 +1,37 @@
+.noborder{
+    border: none;
+    background: transparent;
+}
+
+.btn{
+    white-space:normal;
+}
+
+.card-img {
+    height: 25vh;
+    opacity: 0.4;
+}
+.meet-card{
+    font-family: 'Finger Paint', cursive;
+    margin-top: 2em;
+}
+
+.name_center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width: 700px) {
+    .title{
+        font-weight: 700;
+        font-style: italic;
+        font-size: 5vw;
+    }
+    h4{
+        font-size: 4vw;
+    }
+    .card-img{
+        height: 15vh;
+    }
+  }

@@ -1,0 +1,158 @@
+{% extends "layout.html" %}
+{% block design %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='createmeet.css') }}" >
+{% endblock design %}
+{% block content %}
+<!-- loader -->
+<div id="load-wrapper">
+    <!-- <div id="loading" class="mx-auto"></div> -->
+</div>
+<!-- page content -->
+<div class="container mt-5">
+    <div class="container card mt-5">
+        <form action="" method="post" onsubmit="return preloader();">
+            {{ form.hidden_tag() }}
+            <fieldset>
+                <legend> Enter Meet Details </legend>
+                <div class="form-group">
+                    {{ form.meet_name.label(class="form-control-label")}}
+                    
+                    {% if form.meet_name.errors %}   
+                        {{ form.meet_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.meet_name.errors %}
+                                <span>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.meet_name(class="form-control form-control-lg")}}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.start_date.label(class="form-control-label")}}
+                  
+                    {% if form.start_date.errors %}   
+                      {{ form.start_date(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.start_date.errors %}
+                                <span>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.start_date(class="form-control form-control-lg")}}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.location.label(class="form-control-label")}}
+                  
+                    {% if form.location.errors %}   
+                      {{ form.location(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.location.errors %}
+                                <span>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.location(class="form-control form-control-lg")}}
+                    {% endif %}
+                </div>
+                <div class="row">
+                	<div class="col-md-6">
+                		<label>Mens Teams</label>
+            			<div class="form-check">
+                    		{{ form.ucscm(class="form-check-input") }}
+                    		{{ form.ucscm.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                            {{ form.medm(class="form-check-input") }}
+                    		{{ form.medm.label(class="form-check-label") }}
+                        </div>
+                        <div class="form-check">
+                            {{ form.scim(class="form-check-input") }}
+                            {{ form.scim.label(class="form-check-label") }}
+                        </div>
+                		<div class="form-check">
+                    		{{ form.mgtm(class="form-check-input") }}
+                    		{{ form.mgtm.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                    		{{ form.artm(class="form-check-input") }}
+                    		{{ form.artm.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                    		{{ form.lawm(class="form-check-input") }}
+                    		{{ form.lawm.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                    		{{ form.srim(class="form-check-input") }}
+                    		{{ form.srim.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                    		{{ form.nurm(class="form-check-input") }}
+                    		{{ form.nurm.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                    		{{ form.tecm(class="form-check-input") }}
+                    		{{ form.tecm.label(class="form-check-label") }}
+                		</div>
+                	</div>
+                	<div class="col-md-6">
+                		<label>Womens Teams</label>
+            			<div class="form-check">
+                    		{{ form.ucscl(class="form-check-input") }}
+                    		{{ form.ucscl.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                    		{{ form.medl(class="form-check-input") }}
+                    		{{ form.medl.label(class="form-check-label") }}
+                        </div>
+                        <div class="form-check">
+                            {{ form.scil(class="form-check-input") }}
+                            {{ form.scil.label(class="form-check-label") }}
+                        </div>
+                		<div class="form-check">
+                    		{{ form.mgtl(class="form-check-input") }}
+                    		{{ form.mgtl.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                    		{{ form.artl(class="form-check-input") }}
+                    		{{ form.artl.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                    		{{ form.lawl(class="form-check-input") }}
+                    		{{ form.lawl.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                    		{{ form.sril(class="form-check-input") }}
+                    		{{ form.sril.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                    		{{ form.nurl(class="form-check-input") }}
+                    		{{ form.nurl.label(class="form-check-label") }}
+                		</div>
+                		<div class="form-check">
+                    		{{ form.tecl(class="form-check-input") }}
+                    		{{ form.tecl.label(class="form-check-label") }}
+                		</div>
+                	</div>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info submit-btn") }}
+                <!-- <div class="ld ld-ring ld-spin-fast ld-ext-right"></div> -->
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function preloader(){
+        document.getElementById("load-wrapper").style.display = "block";
+    }
+</script>
+{% endblock content %}
