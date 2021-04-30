@@ -1,5 +1,3 @@
-run.py
-requirements.txt
 swimanager/swimanager.json
 swimanager/meet_data/*
 swimanager/__pycache__/*
